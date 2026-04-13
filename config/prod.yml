@@ -1,0 +1,1962 @@
+---
+server:
+  PORT: 80
+database:
+  CORE_DB: customers
+  BOOKINGS_DB: bookings
+  SUPPLIERS_DB: insurers
+  REPORTING_DB: reporting
+cdn:
+  uri: https://cdn.policybazaar.ae
+  newUri: https://cdnmum.policybazaar.ae
+env: Prod
+aws:
+  region: ap-south-1
+  secretArn: arn:aws:secretsmanager:ap-south-1:533338055397:secret:Mum_Genesis_PROD-HqUjfv
+resCacheControl:
+  public: public
+  maxAge: 28800
+pbUaePayments:
+  uri: https://api.policybazaar.ae/payments/
+  booking:
+    get: booking/
+    createOrderItem: booking/order
+  order:
+    getDetailsByOrderId: orderDetails/$orderId
+  plans:
+    get: plans/
+    getByPlanMatrixId: plan-matrix/
+  suppliers:
+    get: suppliers/
+  paymentGateways:
+    get: payment_gateways_master
+  tomAdjustment:
+    create: tom_adjustment
+  report:
+    get: booking_reports
+  carFtdMtdbookings:
+    get: car_switch/booking_reports
+  carMtdBookedItems:
+    get: orders/booked_items
+  manualBooking: manualBooking
+  payStatus: pay/status
+  items:
+    get: "/items"
+    update: item/$itemId
+    updateByEnquiryId: update_item/$enquiryId
+  installments:
+    get: getInstallments
+    create: installments
+  settlements:
+    create: settlements
+  bmsBookingData:
+    get: bmsBookingData
+  authCapture: authCapture/$leadId
+  authCaptureV2: v2/authCapture
+pbUaeAnalytics:
+  uri: https://api.policybazaar.ae/analytics/
+  carQuotesReports:
+    insert: carQuotesReports
+  carQuotesDataDump:
+    post: carQuotesDataDump
+  carQuotesInsurerViewDump:
+    post: carQuotesInsurerViewDump
+pbUaeInvestment:
+  uri: https://api.policybazaar.ae/investment/
+  illustrator:
+    calculations: illustrator/calculations
+webhook:
+  uri: https://api.genesisinsuranceuae.com/webhook
+  aml: "/aml"
+  journeyLogger: "/logger/journey"
+  hayahLogger: "/logger/term-hayah"
+  auth:
+    login: "/auth/login"
+baseUrlBackend: https://api.policybazaar.ae/
+pbBackendUrls:
+  '1':
+    baseUrl: https://api.policybazaar.ae/car/
+    getPlanUrl: plan
+    getPlanV2Url: plan/v2
+    getQuotesUrl: quotes
+    getQuotesV2Url: quotes/v2
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    suppliersWithOthers: insurers
+    plans: plans/$enquiryId
+    repairTypes: repair_types/$enquiryId
+    issuencePolicy: issuePolicy
+    quotesSeo: seo/new_quotes
+    allPlans: allplans
+    getVariants: insurerVariants/$insurerId
+    getVehicleMatrixDetails: getVehicleMatrixDetails
+    getUpdatedPlanGarage: updated/planGarage
+    getPlanGarageMappingByPlanId: garageList/$planId
+    quotesComparisionUrl: comparision
+    plan_types: plan_types/:enquiryId
+    repair_types: repair_types/:enquiryId
+  '2':
+    baseUrl: https://api.policybazaar.ae/travel/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+    issuePolicy: issuePolicy
+  '3':
+    baseUrl: https://api.policybazaar.ae/health/
+    getPlanUrl: plan/v2
+    getQuotesUrl: quotes
+    getQuotesV2Url: quotes/v2
+    getPlanV2Url: plan/v2
+    getAddOns: addons/$enquiryId
+    getNetworkHospitals: network_hospitals/$planId
+    getUpdatedNetworkHospitals: updated/network_hospitals
+    getPlanNetworkMappingByPlanId: plan_network_mappings/$planId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+    issuencePolicy: issuepolicy
+    checkRenewalRetentionData: checkRenewalRetentionData
+    networkHospitalComparison: network_hospital_comparison
+    planVariants: plan_copayment_groups/$planId/$cityId
+    planSubVariants: getAllSubTpas/$planId
+    getTpas: tpas
+    getAllCities: getAllCities
+    planByInsurer: insurer-plan/$insurerId
+    getAllPlans: allplans
+    comparison: comparision
+    clearDynamicConstants: clearDynamicConstant
+    getInsurerMafDocuments: getInsurerMafDocuments
+    issuePolicy: issuePolicy
+    getUploadMafFormAndEnablePaymentLink: getUploadMafFormAndEnablePaymentLink
+    saveDocUnderBmsViewDetails: saveDocUnderBmsViewDetails
+    verifyPartnerPolicyDocument: verifyPartnerPolicyDocument
+    getPlanNetworkHospitalCdnUrls: getNetworkHospitalCdnUrls
+  '4':
+    baseUrl: https://api.policybazaar.ae/investment/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+  '5':
+    baseUrl: https://api.policybazaar.ae/term/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    issuencePolicy: issuencepolicy
+    getAddOns: addons/$enquiryId
+    getPlanAddOns: plan_addons/$planId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+    addonsMaster: addons/$enquiryId
+    getCaseSummary: magnum/getCaseSummary/$magnumCaseUUID
+  '6':
+    baseUrl: https://api.policybazaar.ae/common/bike/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+  '7':
+    baseUrl: https://api.policybazaar.ae/creditCards/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: banks/$enquiryId
+    plans: plans/$enquiryId
+    dbrCalculate: dbr_calculate
+  '8':
+    baseUrl: https://api.policybazaar.ae/personalLoans/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: banks/$enquiryId
+    plans: plans/$enquiryId
+  '11':
+    baseUrl: https://api.policybazaar.ae/common/carloans/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+  '12':
+    baseUrl: https://api.policybazaar.ae/common/bankAccounts/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: banks/$enquiryId
+    plans: plans/$enquiryId
+  '14':
+    baseUrl: https://api.policybazaar.ae/common/home/
+    crossSell: crossSell
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+    issuencePolicy: home/issuepolicy
+  '18':
+    baseUrl: https://api.policybazaar.ae/common/mortgage/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: banks/$enquiryId
+    plans: plans/$enquiryId
+  '20':
+    baseUrl: https://api.policybazaar.ae/commercialVehicle/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+  '21':
+    baseUrl: https://api.policybazaar.ae/international-tele-consultation/
+    preQuoteUrl: ''
+    quotePageUrl: apply/quotes/$enquiryId
+    proposalPageUrl: apply/proposal/$enquiryId
+    checkoutPageUrl: apply/checkout/$enquiryId
+    paymentPageUrl: apply/payment/$enquiryId
+    thankyouPageUrl: apply/thankyou/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+  '30':
+    baseUrl: https://api.policybazaar.ae/common/warranty/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+  '31': {}
+  '50':
+    baseUrl: https://api.policybazaar.ae/common/sme/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+    allPlans: allplans
+  '53':
+    baseUrl: https://api.policybazaar.ae/investment/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+    allSuppliers: allInsurers
+    issuencePolicy: issuencepolicy
+  '56':
+    baseUrl: https://api.policybazaar.ae/term/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    issuencePolicy: issuencepolicy
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+    allSuppliers: allInsurers
+    healthQuestionnaireOtt: health-questionnaire-ott
+    addHayahMagnumLoading: add-hayah-magnum-loading
+    getMagnumSubmittedData: hayah-policy-submitted-data/$enquiryId
+    getProfilingRecommendations: profiling-recommendations
+    submitHealthDeclaration: integration/$planId/healthDeclaration
+  '58':
+    baseUrl: https://api.policybazaar.ae/common/income-protection/
+    getPlanUrl: plan
+    getQuotesUrl: quotes
+    issuencePolicy: issuencepolicy
+    getAddOns: addons/$enquiryId
+    suppliers: insurers/$enquiryId
+    plans: plans/$enquiryId
+    allSuppliers: allInsurers
+    healthQuestionnaireOtt: health-questionnaire-ott
+    addHayahMagnumLoading: add-hayah-magnum-loading
+    getMagnumSubmittedData: hayah-policy-submitted-data/$enquiryId
+    getProfilingRecommendations: profiling-recommendations
+    submitHealthDeclaration: integration/$planId/healthDeclaration
+email:
+  uri: https://pbserviceapiint.policybazaar.ae/Communication.svc
+  send: "/send"
+  removeFromSuppression: "/RemoveFromSuppression"
+  croneError:
+    to:
+    - saurabhsingh@policybazaar.com
+    - souravshukla@policybazaar.com
+    - bhupendersingh@policybazaar.com
+    - ayushpandey@policybazaar.com
+    - khushpreetsingh@policybazaar.com
+    - sanjaymitreja@policybazaar.com
+    forDev:
+    - saurabhsingh@policybazaar.com
+    - souravshukla@policybazaar.com
+    - bhupendersingh@policybazaar.com
+    - ayushpandey@policybazaar.com
+    - khushpreetsingh@policybazaar.com
+    - sanjaymitreja@policybazaar.com
+    cc: []
+    bcc: []
+  headers:
+    REQUESTINGSYSTEM: IntProducts
+  bmsCallback:
+    to:
+    - shivam1@policybazaar.com
+    cc: []
+    bcc: []
+  sendOtp:
+    from: communication@policybazaar.ae
+    cc: []
+    bcc: []
+  proposalSummary:
+    '1':
+      cc: []
+      bcc: []
+    '3':
+      cc: []
+      bcc: []
+    '5':
+      cc: []
+      bcc: []
+    '6':
+      cc: []
+      bcc: []
+    '20':
+      cc:
+      - motorsupport@policybazaar.ae
+      bcc: []
+    '50':
+      cc: []
+      bcc: []
+  carSelfDeclerationEmail:
+    '1':
+      cc:
+      - communication@policybazaar.ae
+      bcc: []
+  carRenewEmail:
+    '1':
+      cc:
+      - communication@policybazaar.ae
+      bcc: []
+    '3':
+      cc:
+      - communication@policybazaar.ae
+      bcc: []
+    '5':
+      cc: []
+      bcc: []
+  carRetentionEmail:
+    '1':
+      cc:
+      - communication@policybazaar.ae
+      bcc: []
+    '3':
+      cc:
+      - communication@policybazaar.ae
+      bcc: []
+    '5':
+      cc: []
+      bcc: []
+  FTD_MTD_REPORT:
+    to:
+    - amit.kumar@policybazaar.com
+    - ashisht@policybazaar.com
+    - ritwik@policybazaar.ae
+    - brijesh@policybazaar.com
+    - neeraj@policybazaar.ae
+    cc: []
+    bcc: []
+  CAR_SWITCH_REPORT:
+    to:
+    - insurance@carswitch.com
+    - amit.kumar@policybazaar.com
+    - brijesh@policybazaar.com
+    - neeraj@policybazaar.ae
+    cc: []
+    bcc: []
+  CAR_BOOKED_VS_SELECTED_PLAN_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - amit.kumar@policybazaar.com
+    - brijesh@policybazaar.com
+    - nehanehra@policybazaar.com
+    - rohitrawat@policybazaar.com
+    - neeraj@policybazaar.ae
+    - hannan@policybazaar.ae
+    cc: []
+    bcc: []
+  MAKE_WISE_TOP_PLAN_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - amit.kumar@policybazaar.com
+    - brijesh@policybazaar.com
+    - nehanehra@policybazaar.com
+    - rohitrawat@policybazaar.com
+    - neeraj@policybazaar.ae
+    - hannan@policybazaar.ae
+    cc: []
+    bcc: []
+  AML_BULK_REPORT:
+    to:
+    - sanchitaggarwal@policybazaar.com
+    - vipulbaliyan@policybazaar.com
+    cc:
+    - sumeetkumar@policybazaar.com
+    - monicaramesh@zphin.com
+    bcc: []
+  AML_STATUS_REPORT:
+    to:
+    - toshita@policybazaar.ae
+    - hannan@policybazaar.ae
+    - joseph@policybazaar.ae
+    - shivam@policybazaar.ae
+    - sumpreetnayyar@policybazaar.ae
+    - kirti@policybazaar.ae
+    - sahibjeet@policybazaar.com
+    - hasimshaikh@policybazaar.ae
+    - atul@policybazaar.ae
+    - debojyotighosh@policybazaar.ae
+    cc:
+    - brijesh@policybazaar.com
+    - anujbhagia@policybazaar.com
+    - neeraj@policybazaar.ae
+    - uae-product@policybazaar.com
+    - vipulbaliyan@policybazaar.com
+    - sumeetkumar@policybazaar.com
+    - saurabhsingh@policybazaar.com
+    - monicaramesh@zphin.com
+    - monikachawla@policybazaar.com
+    bcc: []
+  CC_LEAD_DATA_DUMP_REPORT:
+    to:
+    - arnavdeshmukh@policybazaar.com
+    - anirudhyadav@policybazaar.com
+    - charulmehra@policybazaar.com
+    - rishabhchaurasiya@policybazaar.com
+    - arvinddubey@policybazaar.com
+    - chanchaltirthani@policybazaar.com
+    - romaraj@policybazaar.com
+    cc: []
+    bcc: []
+  RAK_ISSUANCE_ISSUES_REPORT:
+    to:
+    - harshitgupta@policybazaar.com
+    - ayushtripathi@policybazaar.com
+    - harshsharma@policybazaar.com
+    - adityamakhija@policybazaar.com
+    - siddhantjain@policybazaar.com
+    - sanjaymitreja@policybazaar.com
+    - khushpreetsingh@policybazaar.com
+    - sanketgoyal@policybazaar.com
+    cc: []
+    bcc: []
+  RAK_REPORT_FAILURE:
+    to:
+    - sanjaymitreja@policybazaar.com
+    - khushpreetsingh@policybazaar.com
+    - sanketgoyal@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    cc: []
+    bcc: []
+  REFERREL_DATA_DUMP_REPORT:
+    to:
+    - arnavdeshmukh@policybazaar.com
+    cc: []
+    bcc: []
+  REFERRAL_REPORTS:
+    to:
+    - arnavdeshmukh@policybazaar.com
+    cc: []
+    bcc: []
+  CAR_QUOTES_DATA_DUMP_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - amit.kumar@zphin.com
+    - brijesh@policybazaar.com
+    - shubhamrathod@policybazaar.com
+    - neeraj@policybazaar.ae
+    - toshita@policybazaar.ae
+    - hannan@policybazaar.ae
+    - ashisht@policybazaar.com
+    - uae-product@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    - sanjaymitreja@policybazaar.com
+    - vishaythakur@policybazaar.com
+    - sandeepnayan@policybazaar.com
+    - ashishsharma1@policybazaar.com
+    - khushpreetsingh@policybazaar.com
+    cc: []
+    bcc: []
+  CHASSIS_HIT_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - amit.kumar@zphin.com
+    - brijesh@policybazaar.com
+    - shubhamrathod@policybazaar.com
+    - neeraj@policybazaar.ae
+    - toshita@policybazaar.ae
+    - hannan@policybazaar.ae
+    - ashisht@policybazaar.com
+    - uae-product@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    - sanjaymitreja@policybazaar.com
+    - vishaythakur@policybazaar.com
+    - sandeepnayan@policybazaar.com
+    - ashishsharma1@policybazaar.com
+    - harshitgupta@policybazaar.com
+    cc: []
+    bcc: []
+  CAR_IDV_DATA_DUMP_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - amit.kumar@zphin.com
+    - brijesh@policybazaar.com
+    - shubhamrathod@policybazaar.com
+    - neeraj@policybazaar.ae
+    - toshita@policybazaar.ae
+    - hannan@policybazaar.ae
+    - ashisht@policybazaar.com
+    - uae-product@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    - sanjaymitreja@policybazaar.com
+    - vishaythakur@policybazaar.com
+    - sandeepnayan@policybazaar.com
+    cc: []
+    bcc: []
+  TERM_QUOTES_DATA_DUMP_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - sanchitaggarwal@policybazaar.com
+    cc:
+    - himanshuuppal@policybazaar.com
+    - satyamsingh@policybazaar.com
+    - ayushtripathi@policybazaar.com
+    - siddhantjain@policybazaar.com
+    bcc: []
+  CAR_WASH_VOUCHER_REPORT:
+    to:
+    - richasingh@policybazaar.com
+    - harshitgupta@policybazaar.com
+    - toshita@policybazaar.ae
+    - pritamharde@policybazaar.ae
+    - hannan@policybazaar.ae
+    - neeraj@policybazaar.ae
+    cc:
+    - harshitjaiswal@policybazaar.com
+    - himanshuuppal@policybazaar.com
+    - vipulbaliyan@policybazaar.com
+    - sumeetkumar@policybazaar.com
+    - siddhantjain@policybazaar.com
+    bcc: []
+  HEALTH_QUOTES_DATA_DUMP_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - brijesh@policybazaar.com
+    - toshita@policybazaar.ae
+    - ashisht@policybazaar.com
+    - uae-product@policybazaar.com
+    - avinashjaswani@policybazaar.ae
+    - amit.kumar@policybazaar.com
+    cc: []
+    bcc:
+    - ayushpandey@policybazaar.com
+    - souravshukla@policybazaar.com
+    - bhupendersingh@policybazaar.com
+  E_DATA_DUMP_REPORT:
+    to:
+    - uae-product@policybazaar.com
+    - saurabhsingh@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    - sanjaymitreja@policybazaar.com
+    cc: []
+    bcc: []
+  REFUND_REPORT:
+    to: []
+    cc: []
+    bcc: []
+  COUNT_REPORT:
+    to:
+    - amit.kumar@policybazaar.com
+    - uae-product@policybazaar.com
+    - saurabhsingh@policybazaar.com
+    - tina@policybazaar.ae
+    - sandhyanayak@policybazaar.com
+    - neeraj@policybazaar.ae
+    - sachin@policybazaar.ae
+    cc: []
+    bcc:
+    - nisheetsharma@policybazaar.com
+    - souravshukla@policybazaar.com
+  DOCUMENT_REPORT:
+    to: []
+    cc: []
+    bcc: []
+  MANNUAL_PAYMENT_REASON_REPORT:
+    to: []
+    cc: []
+    bcc: []
+  PRODUCT_DATA_DUMP_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    cc: []
+    bcc: []
+  NBQ_PL_DATA_PUSH:
+    to:
+    - Aggregator.Campaign@nbq.ae
+    cc: []
+    bcc:
+    - arnavdeshmukh@policybazaar.com
+    - anirudhyadav@policybazaar.com
+    - sagarikajaiswal@policybazaar.com
+    - nikitabaliyan@policybazaar.com
+    - vineetrana@policybazaar.com
+    - ashishdobriyal@policybazaar.com
+    - rishabhchaurasiya@policybazaar.com
+    - soumyasinghal@policybazaar.com
+  SEND_BOR_INSURER:
+    '1':
+    - Laith.A@unioninsurance.ae
+    - Rahim.A@unioninsurance.ae
+    '4':
+    - Motor.renewal@watania.ae
+    '5':
+    - Motor.frontdesk@alfuttaim.ae
+    - ameet.pagarani@alfuttaim.com
+    - stanley.saha@alfuttaim.com
+    - Motor.FrontDesk@alfuttaim.com
+    '10':
+    - sapana@oicgulf.ae
+    - sneha@oicgulf.ae
+    - kajal@oicgulf.ae
+    - poojadas@oicgulf.ae
+    - simran@oicgulf.ae
+    - Galicia@oicgulf.ae
+    '21':
+    - motorretailops@sukoon.com
+    - a.veronica@sukoon.com
+    '22':
+    - sonalsharma.rajkumar@qicuae.com
+    - allwyn.thomas@qicuae.com
+    - tony.fernandez@qicuae.com
+    '23':
+    - kuppusamy.m@dubins.ae
+    - fernandes.a@dubins.ae
+    - motorbroker@dubins.ae
+    - elsafah.a@dubins.ae
+    '56':
+    - brian.antao@insurancehouse.ae
+    - IH-MotorUW@insurancehouse.ae
+    - rushdi.alhattab@insurancehouse.ae
+    - Mohamed.boumenir@insurancehouse.ae
+    '65':
+    - charbel.abounader@unic-aiaw.com
+    - ojeni.fahel@unic-aiaw.com
+    - floralyn.taguinod@unic-aiaw.com
+    '72':
+    - hessa.alnuaimi@fidelityunited.ae
+    - fatema.aldhuhoori@fidelityunited.ae
+    - ahmad.saqer@fidelityunited.ae
+    - Luay.Abdalla@fidelityunited.ae
+    - maryam.alshehhi@fidelityunited.ae
+    '75':
+    - Rashan.Pieries@orienttakaful.ae
+    - Dhyan.Kualthunga@orienttakaful.ae
+    - Hasan.Saood@orienttakaful.ae
+    - renn.cruz@orienttakaful.ae
+    - waleed.khan@orienttakaful.ae
+    '81':
+    - bal@gig-gulf.com
+    '82':
+    - SVishnuraj@rakinsurance.com
+    - DRaju@rakinsurance.com
+    - Sheharbanu@rakinsurance.com
+    - spushpangadan@rakinsurance.com
+    '84':
+    - aicmotorpartners@arabiainsurance.com
+    - hasan.khan@arabiainsurance.com
+    - sooraj.pillai@arabiainsurance.com
+    '95':
+    - rais.ahamed@ascanatakaful.ae
+    - sohail.a@ascanatakaful.ae
+    - azhar.ahmed@ascsanatakful.ae
+    '97':
+    - motoruw-retail@eminsco.com
+    - motorpolicyadmin@eminsco.com
+    cc:
+    - uaemotorops@policybazaar.com
+    - motorcrt_uae@policybazaar.com
+    - ayushjaswal@policybazaar.com
+    - uaemotorsupport@policybazaar.com
+    - dheerajsingh1@policybazaar.com
+    - operations@policybazaar.ae
+    - sauravupadhyay1@policybazaar.com
+    bcc: []
+    default:
+    - harshsharma@policybazaar.com
+  SALES_REPORT:
+    '1':
+      to:
+      - toshita@policybazaar.ae
+      - amit.kumar@policybazaar.com
+      - saurabhsingh@policybazaar.com
+      - ashisht@policybazaar.com
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - hannan@policybazaar.ae
+      - uae-product@policybazaar.com
+      - sanchitaggarwal@policybazaar.com
+      - shubhamrathod@policybazaar.com
+      - shivam@policybazaar.ae
+      - reco@policybazaar.com
+      - abhishekf@policybazaar.com
+      - shaktisingh1@policybazaar.com
+      - rakeshbinjola@policybazaar.com
+      - abhishekchandel@policybazaar.com
+      - sahibjeet@policybazaar.com
+      - harshitgupta@policybazaar.com
+      - kritikatyagi@policybazaar.com
+      cc: []
+      bcc:
+      - siddhantjain@policybazaar.com
+    '2':
+      to:
+      - toshita@policybazaar.ae
+      - amit.kumar@policybazaar.com
+      - saurabhsingh@policybazaar.com
+      - ashisht@policybazaar.com
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - hannan@policybazaar.ae
+      - uae-product@policybazaar.com
+      - reco@policybazaar.com
+      - shaktisingh1@policybazaar.com
+      - rakeshbinjola@policybazaar.com
+      - abhishekchandel@policybazaar.com
+      - sahibjeet@policybazaar.com
+      - richab@policybazaar.com
+      cc: []
+      bcc: []
+    '3':
+      to:
+      - toshita@policybazaar.ae
+      - amit.kumar@policybazaar.com
+      - saurabhsingh@policybazaar.com
+      - ashisht@policybazaar.com
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - hannan@policybazaar.ae
+      - shymon@policybazaar.ae
+      - avinashjaswani@policybazaar.ae
+      - uae-product@policybazaar.com
+      - nehakhanna@policybazaar.com
+      - anitkhetarpal@policybazaar.com
+      - shivangiaggarwal@policybazaar.com
+      - reco@policybazaar.com
+      - UAE_MIS@policybazaar.com
+      - healthleads@policybazaar.com
+      - nazzrinsiddiqui@policybazaar.com
+      - navneetsingh@policybazaar.com
+      - abhishekf@policybazaar.com
+      - shaktisingh1@policybazaar.com
+      - rakeshbinjola@policybazaar.com
+      - tashikasharma@policybazaar.com
+      - UAE_CRTTLs@policybazaar.com
+      - abhishekchandel@policybazaar.com
+      - sahibjeet@policybazaar.com
+      - richasingh@policybazaar.com
+      - muneebkhan@policybazaar.com
+      cc: []
+      bcc: []
+    '4':
+      to:
+      - saurabhsingh@policybazaar.com
+      - lifesalesops@policybazaar.com
+      - afzalrao@policybazaar.com
+      - joseph@policybazaar.ae
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - uae-product@policybazaar.com
+      - reco@policybazaar.com
+      - shaktisingh1@policybazaar.com
+      - rakeshbinjola@policybazaar.com
+      - abhishekchandel@policybazaar.com
+      - sahibjeet@policybazaar.com
+      - atul@policybazaar.ae
+      - debojyotighosh@policybazaar.ae
+      cc: []
+      bcc: []
+    '5':
+      to:
+      - saurabhsingh@policybazaar.com
+      - lifesalesops@policybazaar.com
+      - afzalrao@policybazaar.com
+      - joseph@policybazaar.ae
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - uae-product@policybazaar.com
+      - reco@policybazaar.com
+      - shaktisingh1@policybazaar.com
+      - rakeshbinjola@policybazaar.com
+      - abhishekchandel@policybazaar.com
+      - sahibjeet@policybazaar.com
+      - atul@policybazaar.ae
+      - debojyotighosh@policybazaar.ae
+      - satyamsingh@policybazaar.com
+      cc: []
+      bcc: []
+    '50':
+      to:
+      - urvisaini@policybazaar.com
+      - anujbhagia@policybazaar.com
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.com
+      - praveen@genesisinsuranceuae.com
+      - wilsonlobo@policybazaar.ae
+      - richasingh@policybazaar.com
+      - sahibjeet@policybazaar.com
+      cc: []
+      bcc: []
+  ISSUANCE_REPORT:
+    '4':
+      to:
+      - atul@policybazaar.ae
+      - sahibjeet@policybazaar.com
+      - lifesalesops@policybazaar.com
+      - afzalrao@policybazaar.com
+      - reco@policybazaar.com
+      cc:
+      - uae-product@policybazaar.com
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - abhishekchandel@policybazaar.com
+      bcc: []
+    '5':
+      to:
+      - saurabhsingh@policybazaar.com
+      - atul@policybazaar.ae
+      - sahibjeet@policybazaar.com
+      - lifesalesops@policybazaar.com
+      - afzalrao@policybazaar.com
+      - reco@policybazaar.com
+      cc:
+      - uae-product@policybazaar.com
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - abhishekchandel@policybazaar.com
+      bcc: []
+  RECOMMENDATION_REPORT:
+    to:
+    - harshitgupta@policybazaar.com
+    - hannan@policybazaar.ae
+    - toshita@policybazaar.ae
+    - shubhamrathod@policybazaar.com
+    cc:
+    - sanjaymitreja@policybazaar.com
+    - harshsharma@policybazaar.com
+    - adityamakhija@policybazaar.com
+    - vishaythakur@policybazaar.com
+    - ayushtripathi@policybazaar.com
+    - sumeetkumar@policybazaar.com
+    - abhishekchandel@policybazaar.com
+    - dikshantbadesara@policybazaar.com
+    bcc: []
+  COUPON_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - anujbhagia@policybazaar.com
+    - lalitchoudhary@policybazaar.com
+    - rohitkumar5@policybazaar.com
+    - Brijesh@policybazaar.com
+    - richasingh@policybazaar.com
+    cc: []
+    bcc: []
+  WINSURANCE_EMAIL:
+    to: []
+    cc: []
+    bcc: []
+  CAR_QUOTES_PREMIUM_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - amit.kumar@policybazaar.com
+    - brijesh@policybazaar.com
+    - arunkataria@policybazaar.com
+    cc: []
+    bcc: []
+  DAPI_FTD_MTD_YTD_REPORT:
+    to:
+    - arunkataria@policybazaar.com
+    - saurabhsingh@policybazaar.com
+    - uae-product@policybazaar.com
+    - tina@policybazaar.ae
+    - sandhyanayak@policybazaar.com
+    - tusharsharma@policybazaar.com
+    cc: []
+    bcc: []
+  RENEWAL_RETENTION_REPORT:
+    '1':
+      to:
+      - saurabhsingh@policybazaar.com
+      - amit.kumar@policybazaar.com
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - uae-product@policybazaar.com
+      - toshita@policybazaar.ae
+      - shubhamrathod@policybazaar.com
+      - mayanksingh@policybazaar.com
+      - hannan@policybazaar.ae
+      - farhanhashmi@policybazaar.com
+      - kritikatyagi@policybazaar.com
+      - sahibjeet@policybazaar.com
+      - rakeshbinjola@policybazaar.com
+      - siddhantjain@policybazaar.com
+      - sanjaymitreja@policybazaar.com
+      - khushpreetsingh@policybazaar.com
+      cc: []
+      bcc: []
+    '3':
+      to:
+      - saurabhsingh@policybazaar.com
+      - amit.kumar@policybazaar.com
+      - brijesh@policybazaar.com
+      - neeraj@policybazaar.ae
+      - ashisht@policybazaar.com
+      - nehakhanna@policybazaar.com
+      - namitakhanna@policybazaar.com
+      - uae-product@policybazaar.com
+      - shivam1@policybazaar.com
+      cc: []
+      bcc: []
+    '4':
+      to:
+      - saurabhsingh@policybazaar.com
+      - uae-product@policybazaar.com
+      - afzalrao@policybazaar.com
+      - saurabhkaintura@policybazaar.com
+      - be07246@policybazaar.com
+      - joseph@policybazaar.ae
+      - LifeSalesops@policybazaar.com
+      - himanshuuppal@policybazaar.com
+      - sumeetkumar@policybazaar.com
+      - satyamsingh@policybazaar.com
+      - vishalkanojia@policybazaar.com
+      - monikachawla@policybazaar.com
+      cc: []
+      bcc: []
+    '5':
+      to:
+      - saurabhsingh@policybazaar.com
+      - uae-product@policybazaar.com
+      - afzalrao@policybazaar.com
+      - saurabhkaintura@policybazaar.com
+      - be07246@policybazaar.com
+      - joseph@policybazaar.ae
+      - LifeSalesops@policybazaar.com
+      - himanshuuppal@policybazaar.com
+      - sumeetkumar@policybazaar.com
+      - ravindrasingh2@policybazaar.com
+      - kritikatyagi@policybazaar.com
+      - satyamsingh@policybazaar.com
+      - siddhantjain@policybazaar.com
+      - vishalkanojia@policybazaar.com
+      - monikachawla@policybazaar.com
+      cc: []
+      bcc: []
+    '53':
+      to:
+      - pramodmaurya@policybazaar.com
+      - harshitjaiswal@policybazaar.com
+      cc: []
+      bcc: []
+  INSTALLMENT_REMINDER_REPORT:
+    '5':
+      to:
+      - saurabhsingh@policybazaar.com
+      - uae-product@policybazaar.com
+      - LifeSalesops@policybazaar.com
+      - himanshuuppal@policybazaar.com
+      - sumeetkumar@policybazaar.com
+      - ravindrasingh2@policybazaar.com
+      - satyamsingh@policybazaar.com
+      - vishalkanojia@policybazaar.com
+      - monikachawla@policybazaar.com
+      cc: []
+      bcc: []
+  RENEWAL_RETENTION_CONSOLIDATED_REPORT:
+    to: []
+    cc: []
+    bcc: []
+  FUTURE_RENEWAL_REPORT:
+    cc: []
+    bcc: []
+  MAF:
+    to: []
+    cc: []
+    bcc: []
+  MAF_COPY:
+    AXA:
+      to:
+      - contact@hayah.com
+      cc:
+      - termcrt_uae@policybazaar.com
+      - operations@policybazaar.ae
+      bcc: []
+  NETWORK_HOSPITALS:
+    to: []
+    cc: []
+    bcc: []
+  NETWORK_HOSPITALS_MAIL_REPORT:
+    to:
+    - saurabhsingh@policybazaar.com
+    - sanchitaggarwal@policybazaar.com
+    - richasingh@policybazaar.com
+    - ayushpandey@policybazaar.com
+    - souravshukla@policybazaar.com
+    - bhupendersingh@policybazaar.com
+    cc: []
+    bcc: []
+  PLAN_GARAGE_MAIL_REPORT:
+    to: []
+    cc: []
+    bcc:
+    - saurabhsingh@policybazaar.com
+    - nisheetsharma@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    - souravshukla@policybazaar.com
+  MOTOR_FLEET_NEW_LEAD:
+    to:
+    - UAEmotorOps@policybazaar.com
+    cc:
+    - ashisht@policybazaar.com
+    bcc: []
+  BANKING_PRODUCTS_REPORT:
+    authorizedUsers:
+    - sanchitaggarwal@policybazaar.com
+    - richasingh@policybazaar.com
+    - ashisht@policybazaar.com
+    - tina@policybazaar.ae
+    - brijesh@policybazaar.com
+    - tusharsharma@policybazaar.com
+    - nehanehra@policybazaar.com
+    - uae-product@policybazaar.com
+    - uaeops@policybazaar.com
+    - nisheetsharma@policybazaar.com
+    - harshsharma@policybazaar.com
+    - sumeetkumar@policybazaar.com
+    - prashantrai1@policybazaar.com
+    - shekharkumar@policybazaar.com
+    - kartikkhurana@policybazaar.com
+    - sahilparihar@policybazaar.com
+    - monikachawla@policybazaar.com
+    - deepanshichaudhary@policybazaar.com
+    - anirudhsoni@policybazaar.com
+    - soumilarora@policybazaar.com
+    - saurabhsingh@policybazaar.com
+    - vishalkanojia@policybazaar.com
+    - ravirana@policybazaar.com
+    - arnavdeshmukh@policybazaar.com
+    - rishabhchaurasiya@policybazaar.com
+    - ashishdobriyal@policybazaar.com
+    - vineetrana@policybazaar.com
+    - dheerajkumar1@policybazaar.com
+    - deeptichouhan@policybazaar.com
+    - rishivashisth@policybazaar.com
+    - vikasjaiswal@policybazaar.com
+    - nikitabaliyan@policybazaar.com
+    authorizedUserForICCDSA:
+    - sanchitaggarwal@policybazaar.com
+    - richasingh@policybazaar.com
+    - ashisht@policybazaar.com
+    - tina@policybazaar.ae
+    - brijesh@policybazaar.com
+    - tusharsharma@policybazaar.com
+    - nehanehra@policybazaar.com
+    - uae-product@policybazaar.com
+    - uaeops@policybazaar.com
+    - nisheetsharma@policybazaar.com
+    - harshsharma@policybazaar.com
+    - sumeetkumar@policybazaar.com
+    - prashantrai1@policybazaar.com
+    - shekharkumar@policybazaar.com
+    - kartikkhurana@policybazaar.com
+    - sahilparihar@policybazaar.com
+    - monikachawla@policybazaar.com
+    - deepanshichaudhary@policybazaar.com
+    - anirudhsoni@policybazaar.com
+    - soumilarora@policybazaar.com
+    - ayushpandey@policybazaar.com
+    - saurabhsingh@policybazaar.com
+    - vishalkanojia@policybazaar.com
+    - ravirana@policybazaar.com
+    - arnavdeshmukh@policybazaar.com
+    - nikitabaliyan@policybazaar.com
+    authorizedUserForCreditScoreHit:
+    - nisheetsharma@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    - saurabhsingh@policybazaar.com
+    - monikachawla@policybazaar.com
+    - anirudhsoni@policybazaar.com
+    - tina@policybazaar.ae
+    - brijesh@policybazaar.com
+    - sanchitaggarwal@policybazaar.com
+    - tusharsharma@policybazaar.com
+    - ashisht@policybazaar.com
+    - sahilparihar@policybazaar.com
+    - vishalkanojia@policybazaar.com
+    - ravirana@policybazaar.com
+    - arnavdeshmukh@policybazaar.com
+    - nikitabaliyan@policybazaar.com
+    unmaskedForUsers:
+    - tusharsharma@policybazaar.com
+    - sahilparihar@policybazaar.com
+    - tina@policybazaar.ae
+    - deepanshichaudhary@policybazaar.com
+    - rishabhchaurasiya@policybazaar.com
+    - ashishdobriyal@policybazaar.com
+    - vineetrana@policybazaar.com
+    - dheerajkumar1@policybazaar.com
+    - vikasjaiswal@policybazaar.com
+    - nikitabaliyan@policybazaar.com
+    unmaskedForUsersCreditScoreHit:
+    - sahilparihar@policybazaar.com
+    to: []
+    cc: []
+    bcc:
+    - nisheetsharma@policybazaar.com
+  ENDORSEMENT_CERTIFICATE:
+    to: []
+    cc: []
+    bcc: []
+  SHARE_TOP_THREE_QUOTES:
+    to: []
+    cc: []
+    bcc: []
+  NSTP_INSURER_EMAILS:
+    '75':
+      to:
+      - Melrose.S@unioninsurance.ae
+      - MohamedSamy.m@unioninsurance.ae
+      - Palwasha.H@unioninsurance.ae
+      cc: []
+      bcc: []
+    '78':
+      to:
+      - Dr.Aliya@adamjeeinsurance.com
+      cc: []
+      bcc: []
+    '79':
+      to:
+      - kathyrinepelayo.capili@sukoon.com
+      - delia.rubios@sukoon.com
+      - Anoosha.kamal@sukoon.com
+      - akhila.joseph@sukoon.com
+      - meduwpb@sukoon.com
+      cc: []
+      bcc: []
+    '81':
+      to:
+      - niti.gupta@careinsurance.com
+      - 'aditya.ghai@careinsurance.com '
+      - Shanta.mishra@careinsurance.com
+      - Kaushar.hina@careinsurance.com
+      cc: []
+      bcc: []
+    '82':
+      to:
+      - orient.imretention@alfuttaim.com
+      - orient.nemed@alfuttaim.com
+      - orient.imfcpops@alfuttaim.com
+      - nelia.arnedo@alfuttaim.com
+      - Orient.FCPRenewal@alfuttaim.com
+      - orient.indmedicalhp@alfuttaim.com
+      - Suad.Aloraimi@alfuttaim.com
+      - orient.individualmedical_cr@alfuttaim.com
+      - orient.im-review@alfuttaim.com
+      - orient.im-review@alfuttaim.com
+      - sunil.rahman@alfuttaim.com
+      - ANTONY.varghese@alfuttaim.com
+      - Deeban.Sabari@alfuttaim.com
+      cc: []
+      bcc: []
+    '91':
+      to:
+      - retailmedical.broking@noortakaful.com
+      - Abhimanyu.rajpurohit@noortakaful.com
+      - mustafa.alikhan@noortakaful.com
+      - Mouza.alfalasi@noortakaful.com
+      - Ansa.Masood@noortakaful.com
+      - joyce.villanueva@noortakaful.com
+      cc: []
+      bcc: []
+    '124':
+      to:
+      - j.rivera@takafulemarat.com
+      cc: []
+      bcc: []
+    '128':
+      to:
+      - patel.h@dni.ae
+      cc: []
+      bcc: []
+    '164':
+      to:
+      - aggregator@adnic.ae
+      - s.mehta@adnic.ae
+      cc: []
+      bcc: []
+    '169':
+      to:
+      - mark.leynes@orientunbtakaful.ae
+      - yusra.khan@orientunbtakaful.ae
+      - fattima.hussain@orientunbtakaful.ae
+      - ali.qamar@orientunbtakaful.ae
+      - Eulyca.Dungca@orienttakaful.ae
+      - med.operations@orienttakaful.ae
+      - med.quotes@orienttakaful.ae
+      - med.claims@orienttakaful.ae
+      cc: []
+      bcc: []
+    '170':
+      to:
+      - mohammad.jamal@damanhealth.ae
+      - Sami.bekhouche@damanhealth.ae
+      cc: []
+      bcc: []
+    '181':
+      to:
+      - bibin.ravikumar@cigna.com
+      - mark.doherty@cigna.com
+      cc: []
+      bcc: []
+  INSPECTION_BOOKING:
+    '1':
+      to:
+      - robert.knapp@eppcouae.com
+      - info@aurainsure.tech
+      cc:
+      - motorsupport@policybazaar.ae
+      bcc: []
+    '2':
+      to: []
+      cc:
+      - ehaikal@autohub.ae
+      - motorsupport@policybazaar.ae
+      bcc: []
+  CASH_PAYMENT:
+    to: []
+    cc: []
+    bcc: []
+  PLAN_COMPARISON:
+    to: []
+    cc: []
+    bcc: []
+  INSURER_LEADS_MAIL_REPORT:
+    to:
+    - tusharsharma@policybazaar.com
+    - sandhyanayak@policybazaar.com
+    cc:
+    - sumeetkumar@policybazaar.com
+    - prashantrai1@policybazaar.com
+    - farhanhashmi@policybazaar.com
+    - uae-product@policybazaar.com
+    - vaishnavisharma@policybazaar.com
+    - sahilparihar@policybazaar.com
+    - rishabhchaurasiya@policybazaar.com
+    bcc: []
+  BULK_UPLOAD:
+    cc:
+    - saurabhsingh@policybazaar.com
+    - nisheetsharma@policybazaar.com
+    bcc: []
+  NBQ_SUMMARY_DATA_DUMP_REPORT:
+    to:
+    - arnavdeshmukh@policybazaar.com
+    - ashishdobriyal@policybazaar.com
+    - vineetrana@policybazaar.com
+    - Sachin@policybazaar.ae
+    - rishabhchaurasiya@policybazaar.com
+    - nikitabaliyan@policybazaar.com
+    - soumyasinghal@policybazaar.com
+    cc: []
+    bcc:
+    - anirudhyadav@policybazaar.com
+    - sagarikajaiswal@policybazaar.com
+  PARTNER_VOUCHERS:
+    to: []
+    cc: []
+    bcc: []
+  CAR_WASH_VOUCHERS:
+    to: []
+    cc: []
+    bcc: []
+  MAF_HEALTH:
+    to: []
+    cc: []
+    bcc: []
+  MAF_CRITICAL_ILLNESS:
+    to: []
+    cc: []
+    bcc: []
+  PAYMENT_LINK_REQUEST_HEALTH:
+    to:
+    - uae-product@policybazaar.com
+    - toshita@policybazaar.ae
+    - healthleads@policybazaar.com
+    cc: []
+    bcc: []
+  PROTON_OFFER_EMAIL:
+    '1':
+      to: []
+      cc: []
+      bcc: []
+      validFrom: '2022-04-01 00:00:00'
+      validUpto: '2022-06-30 23:59:59'
+  SHARE_VOUCHERS:
+    to: []
+    cc: []
+    bcc: []
+  BOR_EMAIL:
+    to: []
+    cc: []
+    bcc: []
+  WHATSAPP_SCHEDULER_REPORT:
+    to: []
+    cc: []
+    bcc: []
+  INSTALLMENT_SETTLEMENTS_REPORT:
+    '4':
+      to:
+      - afzalrao@policybazaar.com
+      - saurabhkaintura@policybazaar.com
+      - be07246@policybazaar.com
+      - joseph@policybazaar.ae
+      - ashisht@policybazaar.com
+      - uae-product@policybazaar.com
+      - saurabhsingh@policybazaar.com
+      - himanshuuppal@policybazaar.com
+      - sumeetkumar@policybazaar.com
+      - ravindrasingh2@policybazaar.com
+      cc: []
+      bcc: []
+    '5':
+      to:
+      - afzalrao@policybazaar.com
+      - saurabhkaintura@policybazaar.com
+      - be07246@policybazaar.com
+      - joseph@policybazaar.ae
+      - LifeSalesops@policybazaar.com
+      - uae-product@policybazaar.com
+      - saurabhsingh@policybazaar.com
+      - himanshuuppal@policybazaar.com
+      - sumeetkumar@policybazaar.com
+      - ravindrasingh2@policybazaar.com
+      cc: []
+      bcc: []
+  welcome:
+    '1':
+      cc: []
+      bcc: []
+    '2':
+      cc: []
+      bcc: []
+    '3':
+      cc: []
+      bcc: []
+    '5':
+      cc: []
+      bcc: []
+    '6':
+      cc: []
+      bcc: []
+    '20':
+      cc: []
+      bcc: []
+    '50':
+      cc: []
+      bcc: []
+  carEmailError:
+    to:
+    - saurabhsingh@policybazaar.com
+    - anshita@policybazaar.com
+    - sanchitaggarwal@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    - sumeetkumar@policybazaar.com
+    - vipulbaliyan@policybazaar.com
+    - ayushtripathi@policybazaar.com
+    - khushpreetsingh@policybazaar.com
+    cc: []
+    bcc: []
+  INSTALLMENTS_BULK_UPLOAD:
+    CC:
+    - sumeetkumar@policybazaar.com
+    - sanchitaggarwal@policybazaar.com
+    - himanshuuppal@policybazaar.com
+    - vishalkanojia@policybazaar.com
+    - manishnath@policybazaar.com
+    BCC: []
+    FROM: communication@policybazaar.ae
+    CREATED_BY: Policybazaaer Uae
+    TRIGGER_NAME: IntAll_Em_PBUAEReport
+  CAR_AMAZON_VOUCHER_EMAILS:
+    to:
+    - shubhamrathod@policybazaar.com
+    cc:
+    - kritikatyagi@policybazaar.com
+    - sumeetkumar@policybazaar.com
+    - saurabhsingh@policybazaar.com
+    - harshitgupta@policybazaar.com
+    - adityamakhija@policybazaar.com
+    - harshsharma@policybazaar.com
+    - anirudhyadav@policybazaar.com
+    - rohitsharma@policybazaar.ae
+    - abhishekf@policybazaar.com
+    - rahulkumar5@policybazaar.com
+    - sahibjeet@policybazaar.com
+    - hannan@policybazaar.ae
+    - toshita@policybazaar.ae
+    - adityamakhija@policybazaar.com
+    - harshitgupta@policybazaar.com
+    - sauravupadhyay1@policybazaar.com
+    - rishabhsaxena@policybazaar.com
+    - ayushtripathi@policybazaar.com
+    - divyasablok@policybazaar.com
+    - ajayshukla1@policybazaar.com
+    - gauravkumar1@policybazaar.com
+    - saurabhkaintura@policybazaar.com
+    - pushpenderdagar@policybazaar.com
+    - ekanshbatheja@policybazaar.com
+    bcc: []
+  BULK_AMAZON_VOUCHER_REPORT:
+    to:
+    - shubhamrathod@policybazaar.com
+    cc:
+    - saurabhsingh@policybazaar.com
+    - harshitgupta@policybazaar.com
+    - harshsharma@policybazaar.com
+    - ayushtripathi@policybazaar.com
+    - kritikatyagi@policybazaar.com
+    - hannan@policybazaar.ae
+    bcc: []
+whatsApp:
+  baseuri: https://pbserviceapiint.policybazaar.ae
+  sendcommunication: "/sendcommunication"
+  preview: "/template/getwhatsapptemplatepreview"
+  sendCampaign: "/communication/SendWACampaign"
+  reportUrl: https://wainternal.policybazaar.ae /GetCompaignCollection
+  app: JOURNEY
+sms:
+  uri: https://pbserviceapiint.policybazaar.ae/sendcommunication
+pbCore:
+  uri: https://cs.policybazaar.ae/csv2/api
+  oldUri: https://cs.policybazaar.ae/cs
+  visit:
+    create: "/visitor/add"
+    addUpdate: "/visitor/addUpdate"
+  enquiry:
+    create: "/enquiry/add/v1"
+    update: "/enquiry/update/v1"
+  customer:
+    create: "/customer/registerCustomer/v1"
+  lead:
+    create: "/lead/add"
+  lifeSavingsReferralLinkBaseUri: https://www.policybazaar.ae/life-savings/pb-loyalty
+  customerReferralLinkBaseUri: https://www.policybazaar.ae/pb-loyalty/
+payment:
+  baseUrl: https://api.policybazaar.ae/payments/
+  getRefundItemsFromPbMatrixLeadId: refunds/items/$pbMatrixLeadId
+core:
+  uri: https://api.policybazaar.ae/user
+  enquiry:
+    create: "/enquiry"
+    details: "/enquiries"
+    update: "/enquiry/$enquiryId"
+  prequoteEnquiry:
+    update: "/prequote_enquiry/$prequoteStep"
+  userSelection:
+    create: "/user_selection"
+  updateAml:
+    update: "/aml/update"
+  diseases:
+    get: "/diseases"
+  CarModelYears:
+    get: "/model_years"
+  city:
+    get: "/cities/$countryProductId"
+  health_disease_types: "/health_disease_types"
+  products: "/country_product"
+  renewalAndRetention: "/renewal_retention_consolidated_report"
+  getGender: "/genders"
+  salutations: "/salutations"
+  nationalities: "/nationalities"
+  employmentTypes: "/employment_types"
+  createCrossProductEnquiry: "/createCrossProductEnquiry"
+  getSalaryOptions: "/salary"
+  ticket:
+    create: "/raise_tickets"
+    close: "/closeTickets"
+  getHierarchy: "/enquiries/hierarchy/$pbMatrixLeadId"
+  getAllDesignations: "/designations"
+  applyCoupon: "/apply_coupon"
+  invalidateCache: "/cache/invalidate?key=$name"
+  insertUpdateUserPlanComparison: "/comparison_details"
+  prePaymentProposalFormData: "/screenRenderer"
+  journeyFeedbacks: "/journeyFeedbacks"
+  idvRangeWithRecommendedIdv:
+    post: "/idvRangeWithRecommendedIdv"
+  verifyToken: "/verifyToken"
+  uriQa: https://apiqa.policybazaar.ae/user
+  chassis: "/user_vehicle_details/e_data/chassis"
+  enquiryFeature:
+    update: "/updateEnquiryFeatures"
+  analyticsEvent: "/analyticsEvents"
+  journeyShortUrl:
+    create: "/journeyShortUrl"
+logs:
+  uri: https://api.policybazaar.ae/report/logs
+  adminPanel:
+    log: "/admin_panel/log"
+    getLogs: "/admin_panel/get_logs"
+seo:
+  uri: https://api.policybazaar.ae/seo
+  logVitals: "/log_vitals"
+pbUaeMatrixBmsIntegration:
+  uri: https://api.policybazaar.ae/matrix-helper
+  queue:
+    sendMessage: "/queue"
+leadXApi:
+  baseUrl: https://crmapi.policybazaar.ae/leadxapi
+  token: "/Users/authenticate"
+  username: journeyuser
+  getApplicationDetails: "/api/v1/LeadX-service/GetApplicationDetails"
+  getApplicationData: "/api/v1/LeadX-service/GetApplicationData"
+  getBookingSummary: "/api/v1/Bookings-service/GetBookingSummary?product=:productId&month=:month"
+  getLeadBookingDetails: "/api/v1/LeadX-service/GetLeadBookingDetails"
+  getFutureRenewalReport: "/api/v1/Bookings-service/GetFutureRenewalReport"
+  getLead: "/api/v1/LeadX-service/GetLeads?Leadid=:leadId"
+  getLeadDetailsByLeadId: "/api/v1/LeadX-service/GetBookingDetailsByLeadID?leadID=:leadId"
+  getCustomerDNCData: "/api/v1/LeadX-service/CustomerDNCData"
+  getLeadParentID: "/api/v1/LeadX-service/GetLeadParentID"
+  getIssuanceSummary: "/api/v1/Bookings-service/IssuanceReport?product=:productId&month=:month"
+  insertCampaignDetails: "/api/v1/LeadX-service/InsertCampaignDetails"
+croma:
+  uri: https://pbcromaapi.policybazaar.ae/
+  booking:
+    getLeadBookingDetails: GetLeadBookingDetailsForIntProducts
+journeyUrls:
+  '1':
+    baseUrl: https://www.policybazaar.ae/car-insurance/
+    preQuoteUrl: ''
+    quotePageUrl: buy-insurance/quotes/$enquiryId
+    proposalPageUrl: buy-insurance/proposal/$enquiryId
+    checkoutPageUrl: buy-insurance/checkout/$enquiryId
+    paymentPageUrl: buy-insurance/payment/$enquiryId
+    thankyouPageUrl: buy-insurance/thankyou/$enquiryId
+    comparisonPageUrl: buy-insurance/comparison/$enquiryId
+  '2':
+    baseUrl: https://www.policybazaar.ae/travel-insurance/
+    preQuoteUrl: ''
+    quotePageUrl: buy-insurance/quotes/$enquiryId
+    proposalPageUrl: buy-insurance/proposal/$enquiryId
+    checkoutPageUrl: buy-insurance/checkout/$enquiryId
+    paymentPageUrl: buy-insurance/payment/$enquiryId
+    thankyouPageUrl: buy-insurance/thankyou/$enquiryId
+    comparisonPageUrl: buy-insurance/comparison/$enquiryId
+  '3':
+    baseUrl: https://www.policybazaar.ae/health-insurance/
+    preQuoteUrl: buy-insurance
+    quotePageUrl: buy-insurance/quotes/$enquiryId
+    proposalPageUrl: buy-insurance/proposal/$enquiryId
+    checkoutPageUrl: buy-insurance/checkout/$enquiryId
+    paymentPageUrl: buy-insurance/payment/$enquiryId
+    thankyouPageUrl: buy-insurance/thankyou/$enquiryId
+    comparisonPageUrl: buy-insurance/comparison/$enquiryId
+    planByInsurer: insurer-plan/$insurerId
+  '4':
+    baseUrl: https://www.policybazaar.ae/investment-plans/
+    preQuoteUrl: ''
+    quotePageUrl: invest/quotes/$enquiryId
+    proposalPageUrl: invest/proposal/$enquiryId
+    checkoutPageUrl: invest/checkout/$enquiryId
+    paymentPageUrl: invest/payment/$enquiryId
+    thankyouPageUrl: invest/thankyou/$enquiryId
+    comparisonPageUrl: invest/comparison/$enquiryId
+  '5':
+    baseUrl: https://www.policybazaar.ae/term-insurance/buy-insurance/
+    preQuoteUrl: ''
+    quotePageUrl: quotes/$enquiryId
+    proposalPageUrl: proposal/$enquiryId
+    checkoutPageUrl: checkout/$enquiryId
+    paymentPageUrl: payment/$enquiryId
+    thankyouPageUrl: thankyou/$enquiryId
+    comparisonPageUrl: comparison/$enquiryId
+  '6':
+    baseUrl: https://www.policybazaar.ae/bike-insurance/
+    preQuoteUrl: ''
+    quotePageUrl: buy-insurance/quotes/$enquiryId
+    proposalPageUrl: buy-insurance/proposal/$enquiryId
+    checkoutPageUrl: buy-insurance/checkout/$enquiryId
+    paymentPageUrl: buy-insurance/payment/$enquiryId
+    thankyouPageUrl: buy-insurance/thankyou/$enquiryId
+    comparisonPageUrl: buy-insurance/comparison/$enquiryId
+  '7':
+    baseUrl: https://www.policybazaar.ae/credit-cards/
+    preQuoteUrl: ''
+    quotePageUrl: apply/quotes/$enquiryId
+    proposalPageUrl: apply/proposal/$enquiryId
+    checkoutPageUrl: apply/checkout/$enquiryId
+    paymentPageUrl: apply/payment/$enquiryId
+    thankyouPageUrl: apply/thankyou/$enquiryId
+    comparisonPageUrl: apply/comparison/$enquiryId
+  '8':
+    baseUrl: https://www.policybazaar.ae/personal-loans/
+    preQuoteUrl: ''
+    quotePageUrl: apply/quotes/$enquiryId
+    proposalPageUrl: apply/proposal/$enquiryId
+    checkoutPageUrl: apply/checkout/$enquiryId
+    paymentPageUrl: apply/payment/$enquiryId
+    thankyouPageUrl: apply/thankyou/$enquiryId
+    comparisonPageUrl: apply/comparison/$enquiryId
+  '11':
+    baseUrl: https://www.policybazaar.ae/car-loans/
+    preQuoteUrl: ''
+    quotePageUrl: apply/quotes/$enquiryId
+    proposalPageUrl: apply/proposal/$enquiryId
+    checkoutPageUrl: apply/checkout/$enquiryId
+    paymentPageUrl: apply/payment/$enquiryId
+    thankyouPageUrl: apply/thankyou/$enquiryId
+    comparisonPageUrl: apply/comparison/$enquiryId
+  '12':
+    baseUrl: https://www.policybazaar.ae/bank-accounts/
+    preQuoteUrl: ''
+    quotePageUrl: apply/quotes/$enquiryId
+    proposalPageUrl: apply/proposal/$enquiryId
+    checkoutPageUrl: apply/checkout/$enquiryId
+    paymentPageUrl: apply/payment/$enquiryId
+    thankyouPageUrl: apply/thankyou/$enquiryId
+    comparisonPageUrl: apply/comparison/$enquiryId
+  '18':
+    baseUrl: https://www.policybazaar.ae/mortgage-loan/
+    preQuoteUrl: ''
+    quotePageUrl: apply/quotes/$enquiryId
+    proposalPageUrl: apply/proposal/$enquiryId
+    checkoutPageUrl: apply/checkout/$enquiryId
+    paymentPageUrl: apply/payment/$enquiryId
+    thankyouPageUrl: apply/thankyou/$enquiryId
+    comparisonPageUrl: apply/comparison/$enquiryId
+  '20':
+    baseUrl: https://www.policybazaar.ae/commercial-vehicle-insurance/
+    preQuoteUrl: ''
+    quotePageUrl: buy-insurance/quotes/$enquiryId
+    proposalPageUrl: buy-insurance/proposal/$enquiryId
+    checkoutPageUrl: buy-insurance/checkout/$enquiryId
+    paymentPageUrl: buy-insurance/payment/$enquiryId
+    thankyouPageUrl: buy-insurance/thankyou/$enquiryId
+    comparisonPageUrl: buy-insurance/comparison/$enquiryId
+  '21':
+    baseUrl: https://www.policybazaar.ae/health-at-hand/
+    preQuoteUrl: ''
+    quotePageUrl: apply/quotes/$enquiryId
+    proposalPageUrl: apply/proposal/$enquiryId
+    checkoutPageUrl: apply/checkout/$enquiryId
+    paymentPageUrl: apply/payment/$enquiryId
+    thankyouPageUrl: apply/thankyou/$enquiryId
+    comparisonPageUrl: apply/comparison/$enquiryId
+  '30':
+    baseUrl: https://www.policybazaar.ae/motor-warranty/
+    preQuoteUrl: ''
+    quotePageUrl: quotes/$enquiryId
+    proposalPageUrl: proposal/$enquiryId
+    checkoutPageUrl: checkout/$enquiryId
+    paymentPageUrl: payment/$enquiryId
+    thankyouPageUrl: thankyou/$enquiryId
+    comparisonPageUrl: comparison/$enquiryId
+  '31':
+    baseUrl: https://www.api.policybazaar.ae/credit-score/
+    preQuoteUrl: ''
+    quotePageUrl: apply/quotes/$enquiryId
+    proposalPageUrl: apply/proposal/$enquiryId
+    checkoutPageUrl: apply/checkout/$enquiryId
+    paymentPageUrl: apply/payment/$enquiryId
+    thankyouPageUrl: apply/thankyou/$enquiryId
+    comparisonPageUrl: apply/comparison/$enquiryId
+  '50':
+    baseUrl: https://www.policybazaar.ae/business-insurance/sme-insurance/
+    preQuoteUrl: ''
+    quotePageUrl: quotes/$enquiryId
+    proposalPageUrl: proposal/$enquiryId
+    checkoutPageUrl: checkout/$enquiryId
+    paymentPageUrl: payment/$enquiryId
+    thankyouPageUrl: thankyou/$enquiryId
+    comparisonPageUrl: comparison/$enquiryId
+  '53':
+    baseUrl: https://www.policybazaar.ae/other-investment/
+    baseUrlPosp: https://pbcrm.ae/investment-plans/
+    preQuoteUrl: ''
+    quotePageUrl: invest/quotes/$enquiryId
+    proposalPageUrl: invest/proposal/$enquiryId
+    checkoutPageUrl: invest/checkout/$enquiryId
+    paymentPageUrl: invest/payment/$enquiryId
+    thankyouPageUrl: invest/thankyou/$enquiryId
+    comparisonPageUrl: invest/comparison/$enquiryId
+    issuencePolicy: issuencepolicy
+  '56':
+    baseUrl: https://www.policybazaar.ae/critical-illness/buy-insurance/
+    baseUrlPosp: https://pbcrm.ae/critical-illness/buy-insurance/
+    preQuoteUrl: ''
+    quotePageUrl: quotes/$enquiryId
+    proposalPageUrl: proposal/$enquiryId
+    checkoutPageUrl: checkout/$enquiryId
+    paymentPageUrl: payment/$enquiryId
+    thankyouPageUrl: thankyou/$enquiryId
+    comparisonPageUrl: comparison/$enquiryId
+  '58':
+    baseUrl: https://www.policybazaar.ae/income-protection/buy-insurance/
+    baseUrlPosp: https://pbcrm.ae/income-protection/buy-insurance/
+    preQuoteUrl: ''
+    quotePageUrl: quotes/$enquiryId
+    proposalPageUrl: proposal/$enquiryId
+    checkoutPageUrl: checkout/$enquiryId
+    paymentPageUrl: payment/$enquiryId
+    thankyouPageUrl: thankyou/$enquiryId
+    comparisonPageUrl: comparison/$enquiryId
+  homepage: https://www.policybazaar.ae
+httpLogsUrl: https://crmapi.policybazaar.ae/logging/RestLoggingService.svc/uaelogs
+adminPanelUrl: https://account.policybazaar.ae
+renewalRetentionConsolidatedReport:
+  authorizedUsers:
+  - email: ashisht@policybazaar.com
+  - email: tusharsharma@policybazaar.com
+  - email: hannan@policybazaar.ae
+  - email: shubhamrathod@policybazaar.com
+  - email: anshita@policybazaar.com
+  - email: sanchitaggarwal@policybazaar.com
+  - email: saurabhsingh@policybazaar.com
+  - email: uaeops@policybazaar.com
+  - email: afzalrao@policybazaar.com
+  - email: akshbains@policybazaar.com
+  - email: harshsharma@policybazaar.com
+  - email: uae-product@policybazaar.com
+  - email: muneebkhan@policybazaar.com
+  - email: harjeetkaur@policybazaar.com
+  - email: pushpendrasengar@policybazaar.com
+  - email: harshitgupta@policybazaar.com
+futureRenewalReport:
+  authorizedUsers:
+  - ashisht@policybazaar.com
+  - shubhamrathod@policybazaar.com
+  - afzalrao@policybazaar.com
+  - richab@policybazaar.com
+  - sanchitaggarwal@policybazaar.com
+  - richasingh@policybazaar.com
+  - anshita@policybazaar.com
+  - sumeetkumar@policybazaar.com
+  - shekharkumar@policybazaar.com
+  - prashantrai1@policybazaar.com
+  - nisheetsharma@policybazaar.com
+  - brijesh@policybazaar.com
+  - uae-product@policybazaar.com
+  - kartikkhurana@policybazaar.com
+  - harshsharma@policybazaar.com
+  - jyotibharti@policybazaar.com
+  - shivangisrivastava1@policybazaar.com
+  - anirudhsoni@policybazaar.com
+  - monikachawla@policybazaar.com
+  - saurabhsingh@policybazaar.com
+  - akshbains@policybazaar.com
+  - harshsharma@policybazaar.com
+  - siddhantjain@policybazaar.com
+enableDynamicProposalDb: true
+EXPIRES_IN: 1440h
+SUBJECT: user
+ISSUER: policybazaar.ae
+documents:
+  baseUrl: https://api.policybazaar.ae/documents
+  uploadDocument: "/uploadDocument"
+  getSignedUrl: "/getSignedUrl"
+pbUaeCarConsumers:
+  uri: https://api.policybazaar.ae/car-consumers/
+  policyCopyWebhook: policyCopyWebhook
+posp:
+  uri: https://partnersapi.policybazaar.ae/api/v1
+  pushLead: "/lead/push-lead"
+auth:
+  uri: https://api.policybazaar.ae/auth
+  generateDeviceToken: "/getDeviceToken"
+  verifyDeviceToken: "/verifyDeviceToken"
+  token: "/token"
+  partners:
+    uaeWeb:
+      partnerId: PB_1010
+      userName: uae_web
+    core:
+      partnerId: PB_1011
+      userName: core
+    bms:
+      partnerId: PB_1015
+      userName: bms
+    whatsApp:
+      partnerId: PB_1016
+      userName: whats_app
+    matrix:
+      partnerId: PB_1017
+      userName: matrix
+    customerAccounts:
+      partnerId: PB_1013
+      userName: customer_accounts
+    seo:
+      partnerId: PB_1020
+      userName: seo
+    carConsumers:
+      partnerId: PB_1018
+      userName: car_consumers
+    matrixHelper:
+      partnerId: PB_1021
+      userName: matrix_helper
+    payments:
+      partnerId: PB_1022
+      userName: payments
+    car:
+      partnerId: PB_1014
+      userName: car
+    report:
+      partnerId: PB_1012
+      userName: report
+    logger:
+      partnerId: PB_1026
+      userName: logger
+    adminPanelFE:
+      partnerId: PB_1041
+      userName: admin_panel_fe
+PAYMENT_FREQUENCY_TICKET_ISSUE_MAPPING:
+  '4':
+    RECURRING:
+    - '2': 118507
+      '4': 118506
+      '12': 118505
+    RENEWAL:
+    - '1': 117946
+      '2': 117945
+      '4': 117944
+      '12': 117943
+  '5':
+    RECURRING:
+    - '2': 118504
+      '4': 118503
+      '12': 118502
+    RENEWAL:
+    - '1': 117723
+      '2': 117722
+      '4': 117721
+      '12': 117720
+  '53':
+    RECURRING:
+    - '2': 118513
+      '4': 118512
+      '12': 118511
+    RENEWAL:
+    - '1': 118411
+      '2': 118410
+      '4': 118409
+      '12': 118408
+  '56':
+    RECURRING:
+    - '2': 118510
+      '4': 118509
+      '12': 118508
+    RENEWAL:
+    - '1': 118477
+      '2': 118476
+      '4': 118475
+      '12': 118474
+  '58':
+    RECURRING:
+    - '1': 118689
+      '2': 118688
+      '4': 118687
+      '12': 118686
+    RENEWAL:
+    - '1': 118689
+      '2': 118688
+      '4': 118687
+      '12': 118686
+rakInsurance:
+  host: sftp.rakinsurance.com
+  port: 22
+  username: PBAZAAR_SFTP
+amazonGiftCard:
+  uri: https://agcod-v2-eu.amazon.com
+  createGiftCardEndpoint: CreateGiftCard
+  cancelGiftCardEndpoint: CancelGiftCard
+  GetAvailableFunds: GetAvailableFunds
+  headers:
+    Content-Type: application/json
+  currencyCode: AED
+  service: AGCODService
+  voucherDecryptAllowedUserId:
+  - 41627
+  - 31110
+  - 31092
+  - 48021
+  - 33080
+  - 31092
+  - 48021
+  - 60327
+  internalGiftCardAllowedUserIds:
+  - 41627
+  - 31110
+  - 60948
+  - 61446
+  - 33080
+  - 31092
+  - 48021
+  - 60327
+  securityOptions: SSL_OP_NO_SSLvs3
+  endpoint:
+    region: eu-west-1
+    host: https://agcod-v2-eu.amazon.com
+getLogs: https://crmapi.policybazaar.ae/logapi/api/v1/Log-service/uaelogs
+WHITE_LISTED_IPS:
+- 13.235.108.28
+- 3.28.171.200
+- 51.112.90.109
+- 10.25.1.152
+- 51.112.55.43
+WHITELIST_ORIGINS:
+- http://localhost:3000
+- http://localhost:8081
+- http://localhost:40022
+- https://www.policybazaar.ae
+- https://www.policybazaar.ae/
+- https://policybazaar.ae
+- https://uae.policybazaar.ae
+- policybazaar.ae
+- https://loggerqa.policybazaar.ae
+- https://adminpanel.policybazaar.ae
+- https://www.pbcrm.ae
+- https://pbcrm.ae
+- pbcrm.ae
+- https://www.policybazaarinsurance.ae
+shortUrl:
+  uri: https://pbaz.ae/ShortURL
+  app: INTERNATIONAL
+LOGGER_ORIGIN: https://loggerqa.policybazaar.ae
+RATE_LIMITER_CONFIGS:
+  DEVELOPER_TOKEN:
+    TOKENS: 10
+    DURATION: 300
+    BLOCK_DURATION: 1800
+myaccount:
+  uri: https://account.policybazaar.ae
+processEmails:
+- kritikatyagi@policybazaar.com
+- saurabhsingh@policybazaar.com
+- ravindrasingh2@policybazaar.com
+RESTATE:
+  PORT: 9000
+  HOST: https://restate.policybazaar.ae/restate
+bms:
+  uri: https://bmsinternal.policybazaar.ae/api/
+  AdvancedSearch: booking/AdvancedSearchForCJ
+  requestingApp: UAECJ
+  GetLeadsForRenewal: UAEAdmin/GetPagedLeads
+integrations:
+  complyCube:
+    enabled: true
+    baseUrl: https://api.complycube.com/v1
+    eligiblePlans:
+    - 846
+    - 2360
