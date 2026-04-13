@@ -25,7 +25,7 @@ func chromedpAllocatorOpts() []chromedp.ExecAllocatorOption {
 		chromedp.NoSandbox,
 		chromedp.DisableGPU,
 	)
-	if p := chromiumExecutable(); p != "" {
+	if p := ChromiumPath(); p != "" {
 		opts = append(opts, chromedp.ExecPath(p))
 	}
 	return opts
@@ -141,12 +141,3 @@ func chromedpRunPDF(taskCtx context.Context, in Input) ([]byte, error) {
 	return pdf, nil
 }
 
-// chromiumExecutable returns CHROME_PATH or CHROMIUM_PATH when set (typical on Lambda/container images).
-func chromiumExecutable() string {
-	for _, k := range []string{"CHROME_PATH", "CHROMIUM_PATH"} {
-		if p := strings.TrimSpace(os.Getenv(k)); p != "" {
-			return p
-		}
-	}
-	return ""
-}
