@@ -23,5 +23,6 @@ ENV CHROME_PATH=/usr/bin/chromium
 
 # Global cap on concurrent /html-to-pdf renders (all engines). 0 or unset = unlimited. Use 1 on small hosts.
 ENV PDF_MAX_CONCURRENT=1
+ENV APP_ENV = "qa"
 
 CMD [ "bootstrap" ]
