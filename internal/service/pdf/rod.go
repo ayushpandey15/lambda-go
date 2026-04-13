@@ -23,7 +23,7 @@ var (
 )
 
 func rodLauncherBase(ctx context.Context) *launcher.Launcher {
-	return launcher.New().
+	l := launcher.New().
 		Context(ctx).
 		HeadlessNew(true).
 		NoSandbox(true).
@@ -31,6 +31,23 @@ func rodLauncherBase(ctx context.Context) *launcher.Launcher {
 		Set("disable-gpu", "true").
 		Set("disable-extensions", "true").
 		Set("mute-audio", "true")
+	if p := chromiumExecutableForRod(); p != "" {
+		l = l.Bin(p)
+	}
+	return l
+}
+
+// chromiumExecutableForRod prefers ROD_BROWSER_PATH, then CHROME_PATH / CHROMIUM_PATH (Lambda/container).
+func chromiumExecutableForRod() string {
+	if p := strings.TrimSpace(os.Getenv("ROD_BROWSER_PATH")); p != "" {
+		return p
+	}
+	for _, k := range []string{"CHROME_PATH", "CHROMIUM_PATH"} {
+		if p := strings.TrimSpace(os.Getenv(k)); p != "" {
+			return p
+		}
+	}
+	return ""
 }
 
 func rodReset() {

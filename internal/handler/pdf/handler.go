@@ -44,6 +44,12 @@ func HTMLToPDF(c *gin.Context) {
 
 	in := pdfsvc.Input{HTML: htmlPlain}
 
+	if err := pdfAcquire(c.Request.Context()); err != nil {
+		response.WriteErrorResponse(c, response.ErrRateLimit.WithMessage("pdf capacity busy or request cancelled"))
+		return
+	}
+	defer pdfRelease()
+
 	var (
 		out []byte
 		err error
@@ -53,11 +59,10 @@ func HTMLToPDF(c *gin.Context) {
 		out, err = pdfsvc.ConvertChromedp(c.Request.Context(), in)
 	case "rod":
 		out, err = pdfsvc.ConvertRod(c.Request.Context(), in)
-	// case "wkhtml":
-	// 	out, err = pdfsvc.ConvertWkhtmltopdf(c.Request.Context(), in)
-	// case "gotenberg":
-	// 	out, err = pdfsvc.ConvertGotenberg(c.Request.Context(), in)
-	// }
+	case "wkhtml":
+		out, err = pdfsvc.ConvertWkhtmltopdf(c.Request.Context(), in)
+	case "gotenberg":
+		out, err = pdfsvc.ConvertGotenberg(c.Request.Context(), in)
 	default:
 		response.WriteErrorResponse(c, response.ErrInvalidInput.WithMessage("convertType must be one of: chromedp, rod, wkhtml, gotenberg"))
 		return
